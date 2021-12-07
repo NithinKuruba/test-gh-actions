@@ -25,4 +25,4 @@ jobs:
           echo ${{ env.GIT_COMMIT_AUTHOR }}
           echo ${{ env.GIT_COMMIT_MESSAGE }}
           echo ${{ env.GIT_REPO_URL }}
-          echo $(git --no-pager show -s --format='%an <%ae>' COMMIT)
+          echo $(git --no-pager show -s --format='%an <%ae>' ${{ env.GIT_COMMIT_SHA }})
