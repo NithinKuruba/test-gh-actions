@@ -16,6 +16,8 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
       - name: echo all the envs
         run: |
           echo ${{ env.GIT_COMMIT_BRANCH }}
