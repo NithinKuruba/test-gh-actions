@@ -25,10 +25,9 @@ jobs:
           echo ${{ steps.matrix-val.outputs.matrix}}
   loop-matrix:
     needs: matrix-prep
-    name: print-vals
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix).include }}
     steps:
       - name: print-vals
         run: |
