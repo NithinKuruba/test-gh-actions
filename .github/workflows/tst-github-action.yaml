@@ -22,7 +22,7 @@ jobs:
           # echo "${{ secrets.TEST_SECRET_1 }}" | jq '.'
           matrix_val=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}"')
           echo $matrix_val
-          echo ::set-output name=matrix::$(echo $matrix_val)
+          echo ::set-output name=matrix::{\"include\":$(echo $matrix)}
       - name: Print env specific params
         run: |
           echo ${{ steps.set-matrix.outputs.matrix}}
