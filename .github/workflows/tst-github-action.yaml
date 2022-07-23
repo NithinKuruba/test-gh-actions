@@ -2,15 +2,22 @@ name: Test manual action run
 on:
   workflow_dispatch:
     inputs:
-      puppy:
-        description: "A kind of puppy."
+      environment:
+        description: "Environment under test"
         required: true
+        default: "prod"
+        type: choice
+        options: ["prod"]
 
 jobs:
-  activation:
+  matrix-prep:
     name: Print the input
     runs-on: ubuntu-latest
     steps:
-      - name: Print puppy type
-        id: printPuppyType
-        run: echo The puppy is ${{ inputs.puppy }}
+      - name: Fetch env specific params
+        id: matrix-val
+        run: |
+          echo '::set-output name=matrix::$(echo ${{ secrets.TEST_SECRET_1 }} | jq '.${{ inputs.environment }}')'
+      - name: Print env specific params
+        run: |
+          echo ${{ steps.matrix-val.outputs.matrix}}
