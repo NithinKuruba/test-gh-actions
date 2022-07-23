@@ -1,17 +1,16 @@
-name: print out env vars
-
+name: Test manual action run
 on:
   workflow_dispatch:
-
-env:
-  TEST_SECRET: ${{ secrets.TEST_SECRET }}
+    inputs:
+      puppy:
+        description: "A kind of puppy."
+        required: true
 
 jobs:
-  test-decoding-base64:
+  activation:
+    name: Print the input
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: decode and print
-        run: |
-          echo ${{ env.TEST_SECRET }} | base64 --decode > .env
-          cat .env
+      - name: Print puppy type
+        id: printPuppyType
+        run: echo The puppy is ${{ github.event.inputs.puppy }}
