@@ -17,7 +17,7 @@ jobs:
       - name: Fetch env specific params
         id: matrix-val
         run: |
-          matrix_val=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '.${{ inputs.environment }}')
+          matrix_val=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}"')
           echo ::set-output name=matrix::{\"include\": $(echo $matrix_val)}
       - name: Print env specific params
         run: |
