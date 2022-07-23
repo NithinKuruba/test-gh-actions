@@ -27,9 +27,7 @@ jobs:
   loop-matrix:
     needs: matrix-prep
     runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
     steps:
       - name: print-vals
         run: |
-          echo "${{ matrix.datacenter }}"
+          echo "${{ needs.matrix_prep.outputs.matrix }}"
