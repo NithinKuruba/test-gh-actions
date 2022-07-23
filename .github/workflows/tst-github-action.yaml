@@ -20,7 +20,6 @@ jobs:
       - name: Fetch env specific params
         id: set-matrix
         run: |
-          # echo "${{ secrets.TEST_SECRET_1 }}" | jq '.'
           datacenters=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}".datacenters')
           hostname=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}".hostname')
           echo ::set-output name=datacenters::{\"include\":$(echo $datacenters)}
@@ -37,3 +36,4 @@ jobs:
       - name: print-vals
         run: |
           echo "${{ needs.matrix-prep.outputs.hostname }}"
+          echo "${{ datacenters.name }}"
