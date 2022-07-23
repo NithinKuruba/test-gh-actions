@@ -36,4 +36,4 @@ jobs:
       - name: print-vals
         run: |
           echo "${{ needs.matrix-prep.outputs.hostname }}"
-          echo "${{ datacenters.name }}"
+          echo "${{ matrix.name }}"
