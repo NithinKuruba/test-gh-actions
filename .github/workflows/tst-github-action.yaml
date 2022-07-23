@@ -30,8 +30,8 @@ jobs:
     needs: matrix-prep
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(needs.matrix-prep.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.matrix-prep.outputs.matrix).datacenters }}
     steps:
       - name: print-vals
         run: |
-          echo "${{ matrix.datacenter }}"
+          echo "${{ matrix.name }}"
