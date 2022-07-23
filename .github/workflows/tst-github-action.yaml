@@ -14,15 +14,17 @@ jobs:
     name: Print the input
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      datacenters: ${{ steps.set-matrix.outputs.datacenters }}
+      hostname: ${{ steps.set-matrix.outputs.hostname }}
     steps:
       - name: Fetch env specific params
         id: set-matrix
         run: |
           # echo "${{ secrets.TEST_SECRET_1 }}" | jq '.'
-          matrix_val=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}"')
-          echo $matrix_val
-          echo ::set-output name=matrix::{\"include\":$(echo $matrix_val)}
+          datacenters=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}".datacenters')
+          hostname=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}".hostname')
+          echo ::set-output name=datacenters::{\"include\":$(echo $datacenters)}
+          echo ::set-output name=hostname::{\"include\":$(echo $hostname)}
       - name: Print env specific params
         run: |
           echo ${{ steps.set-matrix.outputs.matrix}}
@@ -30,8 +32,8 @@ jobs:
     needs: matrix-prep
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(needs.matrix-prep.outputs.matrix).datacenters }}
+      matrix: ${{ fromJson(needs.matrix-prep.outputs.datacenters) }}
     steps:
       - name: print-vals
         run: |
-          echo "${{ matrix.name }}"
+          echo "${{ needs.matrix-prep.outputs.hostname }}"
