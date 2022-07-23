@@ -30,7 +30,7 @@ jobs:
     needs: matrix-prep
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ needs.matrix-prep.outputs.matrix }}
+      matrix: ${{ fromJson(needs.matrix-prep.outputs.matrix) }}
     steps:
       - name: print-vals
         run: |
