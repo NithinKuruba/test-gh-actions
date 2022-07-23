@@ -19,6 +19,7 @@ jobs:
         run: |
           # echo "${{ secrets.TEST_SECRET_1 }}" | jq '.'
           matrix_val=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}"')
+          echo $matrix
           echo ::set-output name=matrix::$(echo $matrix)
       - name: Print env specific params
         run: |
