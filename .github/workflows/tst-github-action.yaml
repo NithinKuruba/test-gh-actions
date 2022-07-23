@@ -13,4 +13,4 @@ jobs:
     steps:
       - name: Print puppy type
         id: printPuppyType
-        run: echo The puppy is ${{ github.event.inputs.puppy }}
+        run: echo The puppy is ${{ inputs.puppy }}
