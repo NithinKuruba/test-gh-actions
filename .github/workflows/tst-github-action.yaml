@@ -22,14 +22,16 @@ jobs:
           # echo "${{ secrets.TEST_SECRET_1 }}" | jq '.'
           matrix_val=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}"')
           echo $matrix_val
-          echo ::set-output name=matrix::{\"include\":$(echo $matrix)}
+          echo ::set-output name=matrix::$(echo $matrix_val)
       - name: Print env specific params
         run: |
           echo ${{ steps.set-matrix.outputs.matrix}}
   loop-matrix:
     needs: matrix-prep
     runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ needs.matrix-prep.outputs.matrix }}
     steps:
       - name: print-vals
         run: |
-          echo "${{ needs.matrix-prep.outputs.matrix }}"
+          echo "${{ matrix.datacenter }}"
