@@ -32,4 +32,4 @@ jobs:
     steps:
       - name: print-vals
         run: |
-          echo "${{ needs.matrix_prep.outputs.matrix }}"
+          echo "${{ needs.matrix-prep.outputs.matrix }}"
