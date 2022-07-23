@@ -24,7 +24,7 @@ jobs:
           datacenters=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}".datacenters')
           hostname=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}".hostname')
           echo ::set-output name=datacenters::{\"include\":$(echo $datacenters)}
-          echo ::set-output name=hostname::{\"include\":$(echo $hostname)}
+          echo ::set-output name=hostname::$(echo $hostname)
       - name: Print env specific params
         run: |
           echo ${{ steps.set-matrix.outputs.matrix}}
