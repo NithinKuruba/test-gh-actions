@@ -1,39 +1,69 @@
-name: Test manual action run
-on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: "Environment under test"
-        required: true
-        default: "prod"
-        type: choice
-        options: ["prod"]
+name: Run Siteminder Tests to Validate SAML Payload
 
+on:
+  push:
+    branches:
+      - "util/iyOavXXy"
+  # workflow_dispatch:
+  #   inputs:
+  #     environment:
+  #       description: 'Environment under test'
+  #       required: true
+  #       default: 'prod'
+  #       type: choice
+  #       # options: ['dev', 'test', 'prod'] need to know the IPs for test env
+  #       options: ['prod']
+  #     cluster:
+  #       description: 'OCP'
+  #       required: true
+  #       default: 'gold'
+  #       type: choice
+  #       options: ['silver', 'gold']
+env:
+  environment: prod
 jobs:
   matrix-prep:
-    name: Print the input
+    name: Generate matrix
     runs-on: ubuntu-latest
     outputs:
       datacenters: ${{ steps.set-matrix.outputs.datacenters }}
       hostname: ${{ steps.set-matrix.outputs.hostname }}
     steps:
-      - name: Fetch env specific params
+      - name: Fetch environment specific parameters
         id: set-matrix
         run: |
-          datacenters=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}".datacenters')
-          hostname=$(echo "${{ secrets.TEST_SECRET_1 }}" | jq '."${{ inputs.environment }}".hostname')
+          datacenters=$(echo "${{ secrets.SITEMINDER_TESTS_DATACENTERS }}" | jq '."${{ env.environment }}".datacenters')
+          hostname=$(echo "${{ secrets.SITEMINDER_TESTS_DATACENTERS }}" | jq '."${{ env.environment }}".hostname')
           echo ::set-output name=datacenters::{\"include\":$(echo $datacenters)}
           echo ::set-output name=hostname::$(echo $hostname)
-      - name: Print env specific params
-        run: |
-          echo ${{ steps.set-matrix.outputs.matrix}}
-  loop-matrix:
-    needs: matrix-prep
+
+  run-siteminder-tests:
     runs-on: ubuntu-latest
+    needs: matrix-prep
     strategy:
       matrix: ${{ fromJson(needs.matrix-prep.outputs.datacenters) }}
     steps:
+      # - name: Check out repository
+      #   uses: actions/checkout@v3
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 16
+      # - name: Run siteminder tests
+      #   run: |
+      #     cd ${{ github.workspace }}/siteminder-tests
+      #     echo "${{ secrets.SITEMINDER_TESTS_ENV }}" | base64 --decode > .env
+      #     docker run --rm -e ENVIRONMENT=${{ github.event.inputs.environment }} \
+      #                     -e CLUSTER=${{ github.event.inputs.cluster }} \
+      #                     -v $(pwd)/results:/app/results \
+      #                     --add-host=${{ needs.matrix-prep.outputs.hostname }}:${{ matrix.ip }} \
+      #                     $(docker build -q .)
+      # - name: Upload test results
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: ${{ github.event.inputs.cluster }}-${{ github.event.inputs.environment }}-${{ matrix.name }}-results
+      #     path: ${{ github.workspace }}/siteminder-tests/results
       - name: print-vals
         run: |
           echo "${{ needs.matrix-prep.outputs.hostname }}"
           echo "${{ matrix.name }}"
+          echo "${{ matrix.ip }}"
