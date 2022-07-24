@@ -3,7 +3,7 @@ name: Run Siteminder Tests to Validate SAML Payload
 on:
   push:
     branches:
-      - "util/iyOavXXy"
+      - "somebranch"
   # workflow_dispatch:
   #   inputs:
   #     environment:
