@@ -13,4 +13,4 @@ jobs:
       - name: decode and print
         run: |
           echo "${{ format('{0}_SECRET', 'TEST') }}"
-          echo "${{ secrets[format({0}_SECRET, 'TEST')] }}"
+          echo "${{ secrets[format('{0}_SECRET', 'TEST')] }}"
