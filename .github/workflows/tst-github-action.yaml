@@ -13,5 +13,5 @@ jobs:
       - name: decode and print
         run: |
           VALUE=$(echo "$ENVS" | awk '{print toupper($0)}')
-          echo "${{ format('{0}_SECRET', "$VALUE" ) }}"
+          echo "${{ format('{0}_SECRET', '$VALUE' ) }}"
           # echo "${{ secrets[format('{0}_SECRET', 'TEST')] }}"
