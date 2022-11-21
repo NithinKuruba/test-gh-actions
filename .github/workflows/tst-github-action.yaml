@@ -3,7 +3,7 @@ name: print out env vars
 on: push
 
 env:
-  ENVS: TEST
+  ENVS: test
 
 jobs:
   test-decoding-base64:
