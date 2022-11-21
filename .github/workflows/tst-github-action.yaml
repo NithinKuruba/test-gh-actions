@@ -12,5 +12,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: decode and print
         run: |
-          echo "${{ format('{0}_SECRET', env.ENVS ) }}"
+          echo "${{ format('{0}_SECRET', env.ENVS.uppercase ) }}"
           # echo "${{ secrets[format('{0}_SECRET', 'TEST')] }}"
