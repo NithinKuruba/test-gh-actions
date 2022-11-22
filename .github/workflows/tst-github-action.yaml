@@ -14,4 +14,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: decode and print
         run: |
-          echo "${{ ${first_name^^}_${last_name^^} }}"
+          echo "${first_name^^}_${last_name^^}"
