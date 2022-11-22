@@ -6,7 +6,7 @@ env:
   first_name: first_name
   last_name: last_name
   FIRST_NAME_LAST_NAME: nithinkuruba
-  REF: ${{ github.ref }}
+  REF: ${{ github.ref^^ }}
 
 jobs:
   test-decoding-base64:
