@@ -3,8 +3,9 @@ name: print out env vars
 on: push
 
 env:
-  firstName: nithin
-  lastName: kuruba
+  first_name: first_name
+  last_name: last_name
+  FIRST_NAME_LAST_NAME: nithinkuruba
 
 jobs:
   test-decoding-base64:
@@ -13,5 +14,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: decode and print
         run: |
-          export name=$(echo "${{ format('{0} {1}', '${firstName^^}', '${lastName^^}') }}")
-          echo "$name"
+          echo "${{ '${first_name^^}'_'${last_name^^}' }}"
