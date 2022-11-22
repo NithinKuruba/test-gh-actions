@@ -6,6 +6,7 @@ env:
   first_name: first_name
   last_name: last_name
   FIRST_NAME_LAST_NAME: nithinkuruba
+  REF: ${{ github.ref }}
 
 jobs:
   test-decoding-base64:
@@ -15,4 +16,4 @@ jobs:
       - name: decode and print
         run: |
           export name="${first_name^^}_${last_name^^}"
-          echo "${{ env[$name] }}"
+          echo "$REF"
