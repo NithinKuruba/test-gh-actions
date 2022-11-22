@@ -6,7 +6,7 @@ env:
   first_name: first_name
   last_name: last_name
   FIRST_NAME_LAST_NAME: nithinkuruba
-  REF: ${github.ref^^}
+  REF: test_secret
 
 jobs:
   test-decoding-base64:
@@ -15,5 +15,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: decode and print
         run: |
-          export name="${first_name^^}_${last_name^^}"
-          echo "$REF"
+          export name=$(echo "${{ env.REF }}" | awk '{print toupper($0)}')
+          echo "${{ secrets[env.name] }}"
