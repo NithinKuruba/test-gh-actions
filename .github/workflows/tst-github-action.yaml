@@ -15,4 +15,4 @@ jobs:
       - name: decode and print
         run: |
           export name="${first_name^^}_${last_name^^}"
-          echo "${{ env[format('{0}', '$name')] }}"
+          echo "${{ env.$name }}"
