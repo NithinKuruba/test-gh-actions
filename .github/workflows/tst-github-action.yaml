@@ -7,6 +7,7 @@ env:
   last_name: last_name
   FIRST_NAME_LAST_NAME: nithinkuruba
   REF: test_secret
+  name: TEST_SECRET
 
 jobs:
   test-decoding-base64:
