@@ -8,6 +8,7 @@ env:
   FIRST_NAME_LAST_NAME: nithinkuruba
   REF: test_secret
   name: TEST_SECRET
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
   test-decoding-base64:
