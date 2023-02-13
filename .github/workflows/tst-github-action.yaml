@@ -19,7 +19,7 @@ jobs:
         run: |
           summary=$(gh run view 4165715785 --log --repo bcgov/sso-terraform | grep -i error | awk -v d="," '{s=(NR==1?s:s d)$0}END{print s}' | tr -d '\t')
           echo "$summary"
-          echo "::set-output name=summary::$summary"
+          echo "summary=$summary" >> $GITHUB_OUTPUT
       - name: Rocket.Chat Notification
         uses: fjogeleit/http-request-action@master
         with:
