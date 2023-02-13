@@ -17,7 +17,7 @@ jobs:
       - name: Fetch Action Logs
         id: summary
         run: |
-          summary=$(gh run view 4165715785 --log --repo bcgov/sso-terraform | grep -i error | awk '{ printf "%s\"%s\"", (NR==1?"":", "), $0 } END{ print "" }')
+          summary=$(gh run view 4165715785 --log --repo bcgov/sso-terraform | grep -i error | awk '{ printf "%s%s", (NR==1?"":", "), $0 } END{ print "" }')
           echo "$summary"
           echo "::set-output name=summary::$summary"
       - name: Rocket.Chat Notification
