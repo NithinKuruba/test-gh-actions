@@ -13,8 +13,15 @@ jobs:
   test-decoding-base64:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: decode and print
+      - name: Fetch Action Logs
+        id: summary
         run: |
-          export name=$(echo "${{ env.REF }}" | awk '{print toupper($0)}')
-          echo "${{ secrets[env.name] }}"
+          summary=$(gh run view 4165715785 --log | grep -i error)
+          echo "::set-output name=count::$summary"
+      - name: Rocket.Chat Notification
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: ${{ secrets.WEBHOOK }}
+          method: "POST"
+          customHeaders: '{"Content-Type": "application/json"}'
+          data: '{"text": "Terraform Batch Job Failed! @nithinshekar.kuruba", "attachments": [{"color": "#FF0000","author_name": "${{ github.actor }}", "title": "Failed Job", "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "text": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "fields": [{"title": "Summary", "value": "${{ steps.summary.outputs.summary }}", "short": false}]}]}'
