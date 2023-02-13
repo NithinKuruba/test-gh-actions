@@ -17,7 +17,7 @@ jobs:
       - name: Fetch Action Logs
         id: summary
         run: |
-          summary=$(gh run view 4165715785 --log --repo bcgov/sso-terraform | grep -i error | awk '{ printf "%s%s", (NR==1?"":", "), $0 } END{ print "" }')
+          summary=$(gh run view 4165715785 --log | grep -i error | awk -v d="," '{s=(NR==1?s:s d)$0}END{print s}' | tr -d '\t')
           echo "$summary"
           echo "::set-output name=summary::$summary"
       - name: Rocket.Chat Notification
@@ -26,4 +26,4 @@ jobs:
           url: ${{ secrets.WEBHOOK }}
           method: "POST"
           customHeaders: '{"Content-Type": "application/json"}'
-          data: '{"text": "${{ steps.summary.outputs.summary }}"}'
+          data: '{"text": "Terraform Batch Job Failed! @nithinshekar.kuruba", "attachments": [{"color": "#FF0000","author_name": "${{ github.actor }}", "title": "Failed test", "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "text": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "fields": [{"title": "Summary", "value": "${{ steps.summary.outputs.summary }}", "short": false}]}]}'
