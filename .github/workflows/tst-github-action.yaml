@@ -26,4 +26,4 @@ jobs:
           url: ${{ secrets.WEBHOOK }}
           method: "POST"
           customHeaders: '{"Content-Type": "application/json"}'
-          data: '{"text": "Terraform Batch Job Failed! @nithinshekar.kuruba", "attachments": [{"color": "#FF0000","author_name": "${{ github.actor }}", "title": "Failed test", "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "text": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "fields": [{"title": "Summary", "value": "${{ steps.summary.outputs.summary }}", "short": false}]}]}'
+          data: '{"text": "Terraform Batch Job Failed! @nithinshekar.kuruba", "attachments": [{"color": "#FF0000","author_name": "${{ github.actor }}", "title": "Failed test", "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "text": "${{ steps.summary.outputs.summary }}", "fields": [{"title": "Summary", "value": "${{ steps.summary.outputs.summary }}", "short": false}]}]}'
