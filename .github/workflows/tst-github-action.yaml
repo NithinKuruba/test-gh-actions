@@ -17,7 +17,7 @@ jobs:
       - name: Fetch Action Logs
         id: summary
         run: |
-          summary=$(gh run view 4165715785 --log | grep -i error)
+          summary=$(gh run view 4165715785 --log --repo bcgov/sso-terraform | grep -i error)
           echo "::set-output name=count::$summary"
       - name: Rocket.Chat Notification
         uses: fjogeleit/http-request-action@master
