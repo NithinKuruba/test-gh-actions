@@ -26,4 +26,4 @@ jobs:
           url: ${{ secrets.WEBHOOK }}
           method: "POST"
           customHeaders: '{"Content-Type": "application/json"}'
-          data: '{"text": "${{ steps.summary.outputs.summary }}"}'
+          data: '{"text": ${{ steps.summary.outputs.summary }}}'
