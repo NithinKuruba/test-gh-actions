@@ -27,6 +27,7 @@ jobs:
         uses: bcgov/sso-requests-actions/actions/setup-terraform@v0.55.0
         with:
           context: .
+          tf-version: ${{ env.TF_VERSION }}
           apply: false
         continue-on-error: true
       - name: Fetch Action Logs
