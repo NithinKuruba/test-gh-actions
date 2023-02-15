@@ -18,10 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{needs.job1.outputs.output1}} == 'failed'
     steps:
-      - name: Pull the main branch again
+      - uses: actions/checkout@v2
+      - name: Pull the dev branch again
         run: |
           git pull origin dev --rebase
-
       - name: Setup Terraform
         id: tf
         uses: bcgov/sso-requests-actions/actions/setup-terraform@v0.55.0
