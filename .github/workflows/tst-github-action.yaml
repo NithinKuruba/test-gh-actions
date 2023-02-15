@@ -17,7 +17,7 @@ jobs:
       - name: Fetch Action Logs
         id: summary
         run: |
-          summary=$(gh run view ${{ github.run_id }} --log | awk 'match($0, /gh .*/) {print substr($0, RSTART, RLENGTH)}' | tr '\n' ',' | sed -e 's|["'\'']||g' | sed -r 's/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g')
+          summary=$(gh run view ${{ github.run_id }} --log --repo nithinkuruba/test-gh-actions | awk 'match($0, /gh .*/) {print substr($0, RSTART, RLENGTH)}' | tr '\n' ',' | sed -e 's|["'\'']||g' | sed -r 's/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g')
           echo "$summary"
           echo "summary=$summary" >> $GITHUB_OUTPUT
       - name: Rocket.Chat Notification
