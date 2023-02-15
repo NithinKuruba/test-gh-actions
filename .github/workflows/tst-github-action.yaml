@@ -28,6 +28,7 @@ jobs:
         with:
           context: .
           tf-version: ${{ env.TF_VERSION }}
+          kc-provider-version: 3.10.0
           apply: false
         continue-on-error: true
       - name: Fetch Action Logs
