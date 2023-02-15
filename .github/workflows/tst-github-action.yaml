@@ -10,7 +10,7 @@ env:
   name: TEST_SECRET
   GH_TOKEN: ${{ github.token }}
   TF_LOG: ERROR
-  TF_LOG_PATH: ./terraform.log
+  TF_LOG_PATH: ${{ github.workspace }}/terraform.log
   TF_VERSION: 1.1.4
 
 jobs:
