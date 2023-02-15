@@ -23,14 +23,20 @@ jobs:
         run: |
           git pull origin dev --rebase
       - name: Setup Terraform
-        id: tf
-        uses: bcgov/sso-requests-actions/actions/setup-terraform@v0.55.0
+        uses: hashicorp/setup-terraform@v1
         with:
-          context: .
-          tf-version: ${{ env.TF_VERSION }}
-          kc-provider-version: 3.10.0
-          apply: false
-        continue-on-error: true
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Terraform Init
+        id: init
+        run: terraform init -upgrade
+        shell: bash
+        working-directory: .
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        shell: bash
+        working-directory: .
       - name: Fetch Action Logs
         id: summary
         run: |
