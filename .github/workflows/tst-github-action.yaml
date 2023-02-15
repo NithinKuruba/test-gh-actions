@@ -16,20 +16,6 @@ env:
 jobs:
   job1:
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.error.outputs.status }}
-      jobid: ${{ steps.error.outputs.jobid }}
-    steps:
-      - name: Emit Error
-        id: error
-        run: |
-          echo "Error: error sending PUT request to /auth/admin/realms/master/identity-provider/instances/azureidir: 500 Internal Server Error. Response body: {error:unknown_error} Error: error sending PUT request to /auth/admin/realms/standard/identity-provider/instances/githubpublic: 500 Internal Server Error. Response body: {error:unknown_error} Error: error sending PUT request to /auth/admin/realms/github/identity-provider/instances/github/mappers/bb1a8da4-f904-4c8a-8458-95f2c71b7d0e: 500 Internal Server Error. Response body: <html><head><title>Error</title></head><body>Internal Server Error</body></html>"
-          echo "status=failed" >> "$GITHUB_OUTPUT"
-          echo "status=failed" >> "$GITHUB_OUTPUT"
-          exit 1
-  job2:
-    runs-on: ubuntu-latest
-    needs: job1
     if: ${{needs.job1.outputs.output1}} == 'failed'
     steps:
       - name: Pull the main branch again
