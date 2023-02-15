@@ -18,12 +18,13 @@ jobs:
         id: summary
         run: |
           summary=$(gh run view 4165715785 --log --repo bcgov/sso-terraform | grep -i error | awk 'match($0, /Error: .*/) {print substr($0, RSTART, RLENGTH)}' | sed 's/\"//g')
-          echo "$summary"
-          echo "summary=$summary" >> $GITHUB_OUTPUT
+          errorsummary=$(echo $summary)
+          echo "$errorsummary"
+          echo "errorsummary=$errorsummary" >> $GITHUB_OUTPUT
       - name: Rocket.Chat Notification
         uses: fjogeleit/http-request-action@master
         with:
           url: ${{ secrets.WEBHOOK }}
           method: "POST"
           customHeaders: '{"Content-Type": "application/json"}'
-          data: '{"text": "Terraform Batch Failed! @nithinshekar.kuruba", "attachments": [{"color": "#FF0000","author_name": "${{ github.actor }}", "title": "Click here to open the job", "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "text": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "fields": [{"title": "Error Summary", "value": "Error: Error acquiring the state lock", "short": false}]}]}'
+          data: '{"text": "Terraform Batch Failed! @nithinshekar.kuruba", "attachments": [{"color": "#FF0000","author_name": "${{ github.actor }}", "title": "Click here to open the job", "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "text": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "fields": [{"title": "Error Summary", "value": "${{ steps.summary.outputs.errorsummary }}", "short": false}]}]}'
