@@ -32,7 +32,7 @@ jobs:
       - name: Fetch Action Logs
         id: summary
         run: |
-          summary=$(cat terraform.log | awk 'match($0, /\[ERROR\] .*/) {print substr($0, RSTART, RLENGTH)}' | tr '\n' ',' | sed -e 's|["'\'']||g')
+          summary=$(cat ${{ github.workspace }}/terraform.log | awk 'match($0, /\[ERROR\] .*/) {print substr($0, RSTART, RLENGTH)}' | tr '\n' ',' | sed -e 's|["'\'']||g')
           echo "$summary"
           echo "summary=$summary" >> "$GITHUB_OUTPUT"
       - name: Rocket.Chat Notification
