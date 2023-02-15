@@ -37,6 +37,8 @@ jobs:
         run: terraform plan -no-color
         shell: bash
         working-directory: .
+        continue-on-error: true
+
       - name: Fetch Action Logs
         id: summary
         run: |
