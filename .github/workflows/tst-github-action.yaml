@@ -30,13 +30,13 @@ jobs:
         id: init
         run: terraform init -upgrade
         shell: bash
-        working-directory: .
+        working-directory: ./terraform-v2
 
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
         shell: bash
-        working-directory: .
+        working-directory: ./terraform-v2
         continue-on-error: true
 
       - name: Fetch Action Logs
