@@ -21,7 +21,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Set env to development
-        if: ${{ github.event.inputs.environment == "dev" }}
+        if: ${{ github.event.inputs.environment == 'dev' }}
         run: |
           cat >> $GITHUB_ENV <<EOF
           APP_ENV=develop
@@ -35,7 +35,7 @@ jobs:
           EOF
 
       - name: Set env to production
-        if: ${{ github.event.inputs.environment == "prod" }}
+        if: ${{ github.event.inputs.environment == 'prod' }}
         run: |
           cat >> $GITHUB_ENV <<EOF
           APP_ENV=production
