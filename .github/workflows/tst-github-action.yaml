@@ -17,9 +17,7 @@ jobs:
           repository: bcgov/sso-terraform-modules
           ref: dev
       - name: Get Terraform Modules SHA
-        run: |
-          SHA=$(git rev-parse --short HEAD)
-          echo "TF_MODULES_SHA=$SHA" >>$GITHUB_OUTPUT
+        run: echo "TF_MODULES_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
