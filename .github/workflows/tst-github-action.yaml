@@ -11,10 +11,21 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Terraform Modules
+        uses: actions/checkout@v3
+        with:
+          repository: bcgov/sso-terraform-modules
+          ref: dev
+
+      - id: tf-modules
+        name: Get Terraform Modules Latest SHA
+        run: echo "latest-sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        shell: bash
 
       - name: Pull the dev branch again
         run: git pull origin dev --rebase
+
+      - uses: actions/checkout@v2
 
       - name: Setup Terraform
         id: tf
@@ -41,5 +52,5 @@ jobs:
           test-github-client-secret: abc123
           prod-github-client-id: abc123
           prod-github-client-secret: abc123gi
-          tf-modules-ref: dev
+          tf-modules-cache-key: ${{ steps.tf-modules.outputs.latest-sha }}
         continue-on-error: true
