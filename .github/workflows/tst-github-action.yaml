@@ -11,14 +11,16 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v2
+
+      - name: Pull the main branch again
+        run: git pull origin main --rebase
 
       - name: Setup Terraform
         id: tf
         uses: bcgov/sso-requests-actions/actions/setup-terraform@fix-job
         with:
-          context: terraform-v2
+          context: ./terraform-v2
           tf-version: ${{ env.TF_VERSION }}
           tf-s3-bucket: xgr00q-testing-nk
           tf-s3-bucket-key: keycloak/gold
