@@ -18,8 +18,7 @@ jobs:
         id: tf
         uses: bcgov/sso-requests-actions/actions/setup-terraform@v0.60.0
         with:
-          tf-modules-ref: dev
-          context: ./terraform-v2
+          context: terraform-v2
           tf-version: ${{ env.TF_VERSION }}
           tf-s3-bucket: xgr00q-testing-nk
           tf-s3-bucket-key: keycloak/gold
@@ -39,5 +38,6 @@ jobs:
           test-github-client-id: abc123
           test-github-client-secret: abc123
           prod-github-client-id: abc123
-          prod-github-client-secret: abc123
+          prod-github-client-secret: abc123gi
+          tf-modules-ref: dev
         continue-on-error: true
