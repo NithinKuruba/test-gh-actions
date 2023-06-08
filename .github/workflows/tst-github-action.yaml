@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Pull the main branch again
-        run: git pull origin main --rebase
+      - name: Pull the dev branch again
+        run: git pull origin dev --rebase
 
       - name: Setup Terraform
         id: tf
