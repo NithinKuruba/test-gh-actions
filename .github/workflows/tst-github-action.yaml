@@ -16,17 +16,12 @@ jobs:
         with:
           repository: bcgov/sso-terraform-modules
           ref: dev
-      - name: Get Terraform Modules SHA
-        run: |
-          ls -lrta
-          pwd
-          git rev-parse --short HEAD
-          echo "TF_MODULES_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - id: tf-modules
+        name: Get Terraform Modules SHA
+        run: echo "latest-sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
       - name: Commands
         run: |
-          echo $TF_MODULES_SHA
-          ls -lrta
-          pwd
+          echo ${{ steps.tf-modules.outputs.latest-sha }}
