@@ -16,7 +16,7 @@ jobs:
 
       - name: Setup Terraform
         id: tf
-        uses: bcgov/sso-requests-actions/actions/setup-terraform@v0.60.0
+        uses: bcgov/sso-requests-actions/actions/setup-terraform@fix-job
         with:
           context: terraform-v2
           tf-version: ${{ env.TF_VERSION }}
